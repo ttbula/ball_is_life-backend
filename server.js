@@ -16,12 +16,12 @@ mongoose.connection
   .on("close", () => console.log("Disconnected"))
   .on("error", (error) => console.log(error));
 
-  //models
+//models
 const PlayerSchema = new mongoose.Schema({
   id: Number,
   first_name: String,
-  last_name: String
-})
+  last_name: String,
+});
 
 ///////////////////////////////
 // MiddleWare
@@ -32,26 +32,26 @@ app.use(express.json()); // parse json bodies
 
 //test route
 app.get("/", (req, res) => {
-  res.send("sup");
+  res.send("and we back");
 });
 
 //Player index routes
-app.get('/player', async (req, res) => {
+app.get("/player", async (req, res) => {
   try {
-      res.json(await Player.find({}))
+    res.json(await Player.find({}));
   } catch (error) {
-      res.status(400).json(error)
+    res.status(400).json(error);
   }
 });
 
 //Player Create
-app.post('/player', async (req,res) => {
+app.post("/player", async (req, res) => {
   try {
-    res.json(await Player.create(req.body))
+    res.json(await Player.create(req.body));
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
 //listener
 app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));
