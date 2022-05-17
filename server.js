@@ -32,7 +32,7 @@ app.use(express.json()); // parse json bodies
 
 //test route
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("sup");
 });
 
 //Player index routes
