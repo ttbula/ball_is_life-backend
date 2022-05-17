@@ -8,20 +8,23 @@ const mongoose = require("mongoose");
 // import middlware
 const cors = require("cors");
 const morgan = require("morgan");
+// const { default: Player } = require("../frontend/src/pages/Player");
 
 //db connection
 mongoose.connect(MONGODB_URL);
 mongoose.connection
   .on("open", () => console.log("Connected to Mongoose"))
   .on("close", () => console.log("Disconnected"))
-  .on("error", (error) => console.log(error));
+  .on("error", (error) => console.log(error))
 
 //models
 const PlayerSchema = new mongoose.Schema({
-  id: Number,
   first_name: String,
   last_name: String,
+  position: String
 });
+
+const Player = mongoose.model('Player', PlayerSchema);
 
 ///////////////////////////////
 // MiddleWare
@@ -48,6 +51,26 @@ app.get("/player", async (req, res) => {
 app.post("/player", async (req, res) => {
   try {
     res.json(await Player.create(req.body));
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// Player update
+app.put('/player', async (req,res) => {
+  try {
+    res.json(
+      await Player.findByIdAndUpdate(req.params.id, req.body)
+    )
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
+
+// Player delete
+app.delete("/player/:id", async (req, res) => {
+  try {
+    res.json(await Player.findByIdAndRemove(req.params.id));
   } catch (error) {
     res.status(400).json(error);
   }
