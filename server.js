@@ -26,16 +26,14 @@ const PlayerSchema = new mongoose.Schema({
 
 const Player = mongoose.model('Player', PlayerSchema);
 
-///////////////////////////////
-// MiddleWare
-////////////////////////////////
+//Middleware
 app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
 
 //test route
 app.get("/", (req, res) => {
-  res.send("and we back");
+  res.send("i wish there was data on players");
 });
 
 //Player index routes
@@ -57,7 +55,7 @@ app.post("/player", async (req, res) => {
 });
 
 // Player update
-app.put('/player', async (req,res) => {
+app.put('/player/:id', async (req,res) => {
   try {
     res.json(
       await Player.findByIdAndUpdate(req.params.id, req.body)
