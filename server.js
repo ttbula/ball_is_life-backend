@@ -21,7 +21,9 @@ mongoose.connection
 const PlayerSchema = new mongoose.Schema({
   first_name: String,
   last_name: String,
-  position: String
+  position: String,
+  rating: String,
+  team: String
 });
 
 const Player = mongoose.model('Player', PlayerSchema);
